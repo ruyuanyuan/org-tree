@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+    </body>
+</html>
+<script>
+
+    var arrs = [];
+
+   
+       var data = [
+           {
+               name: '中国',
+               children: [
+                   {
+                       name: '教第三节课',
+
+                   },
+                   {
+                       name: '教呼呼',
+                       children: [
+                           {
+                               name: '大一',
+                               children: [
+                                   {
+                                       name: '课程1',
+                                       children: [
+                                           {
+                                               name: '1231'
+                                           },
+                                           {
+                                               name: '121'
+                                           }
+                                       ]
+                                   },
+                                   {
+                                       name: '课程2',
+                                       children: [
+                                           {
+                                               name: '1232'
+                                           },
+                                           {
+                                               name: '122'
+                                           }
+                                       ]
+                                   },
+                                   {
+                                       name: '课程3',
+                                       children: [
+                                           {
+                                               name: '1233'
+                                           },
+                                           {
+                                               name: '123'
+                                           }
+                                       ]
+                                   },
+
+                               ]
+                           }
+                       ]
+                   },
+                   {
+                       name: '活动',
+                       children:null
+                   }
+               ]
+           }
+       ];
+        getArray(data,'活动');
+        // console.log(getArray(data,'活动'));
+   
+    function getArray(data,name)
+    {   var this_obj;    
+        for (var i in data) {
+            // console.log('i',i);
+            // console.log('datai',data[i].children);
+            if (data[i].name == name) {
+                console.log(data[i]);
+                // this_obj=data[i];
+                // return this_obj;
+                break;
+            } else {
+                getArray(data[i].children, name);
+            }
+        }
+
+        
+    }
+
+</script>

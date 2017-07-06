@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="../public/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="../public/jquery.orgchart.css" />
+    </head>
+    </head>
+    <body>
+    <div id="chart-container"></div>
+    </body>
+</html>
+<script type="text/javascript" src="../public/jquery.min.js"></script>
+<script type="text/javascript" src="../public/jquery.orgchart.js"></script>
+<script type="text/javascript">
+     var data=[
+     {'id':1,'pid':0, 'name': 'To 1', 'title': 'engineer', 'className': 'pipeline1' },
+     {'id':2,'pid':1 ,'name': 'To 2', 'title': 'engineer', 'className': 'pipeline1' },
+     {'id':3,'pid':1 ,'name': 'To 3', 'title': 'engineer', 'className': 'pipeline1' },
+     {'id':4,'pid':1 ,'name': 'To 4', 'title': 'engineer', 'className': 'pipeline1' },
+     {'id':5,'pid':1 ,'name': 'To 5', 'title': 'engineer', 'className': 'pipeline1' },
+     {'id':6,'pid':5 ,'name': 'To 6', 'title': 'engineer', 'className': 'pipeline1' },
+     {'id':7,'pid':5 ,'name': 'To 7', 'title': 'engineer', 'className': 'pipeline1' },
+     {'id':8,'pid':5 ,'name': 'To 8', 'title': 'engineer', 'className': 'pipeline1' },
+     {'id':9,'pid':8 ,'name': 'To 9', 'title': 'engineer', 'className': 'pipeline1' },
+     {'id':10,'pid':8 ,'name': 'To 10', 'title': 'engineer', 'className': 'pipeline1' }
+      ];
+     function toTree(data) {
+        // 删除 所有 children,以防止多次调用
+        data.forEach(function (item) {
+            delete item.children;
+        });
+        // 将数据存储为 以 id 为 KEY 的 map 索引数据列
+        var map = {};
+        data.forEach(function (item) {
+            map[item.id] = item;
+        });
+
+        var val = [];
+        data.forEach(function (item) {
+
+            // 以当前遍历项，的pid,去map对象中找到索引的id
+            var parent = map[item.pid];
+
+            // 好绕啊，如果找到索引，那么说明此项不在顶级当中,那么需要把此项添加到，他对应的父级中
+            if (parent) {
+
+                (parent.children || ( parent.children = [] )).push(item);
+         } else {
+                //如果没有在map中找到对应的索引ID,那么直接把 当前的item添加到 val结果集中，作为顶级
+                val.push(item);
+            }
+        });
+
+        return val;
+    }
+     var datascource = {
+      'name': 'Lao Lao',
+      'title': 'general manager',
+      'children': [
+        { 'name': 'Bo Miao', 'title': 'department manager', 'className': 'middle-level',
+          'children': [
+            { 'name': 'Li Jing', 'title': 'senior engineer', 'className': 'product-dept' },
+            { 'name': 'Li Xin', 'title': 'senior engineer', 'className': 'product-dept',
+              'children': [
+                { 'name': 'To To', 'title': 'engineer', 'className': 'pipeline1' },
+                { 'name': 'Fei Fei', 'title': 'engineer', 'className': 'pipeline1' },
+                { 'name': 'Xuan Xuan', 'title': 'engineer', 'className': 'pipeline1' }
+              ]
+            }
+          ]
+        },
+        { 'name': 'Su Miao', 'title': 'department manager', 'className': 'middle-level',
+          'children': [
+            { 'name': 'Pang Pang', 'title': 'senior engineer', 'className': 'rd-dept' },
+            { 'name': 'Hei Hei', 'title': 'senior engineer', 'className': 'rd-dept',
+              'children': [
+                { 'name': 'Xiang Xiang', 'title': 'UE engineer', 'className': 'frontend1' },
+                { 'name': 'Dan Dan', 'title': 'engineer', 'className': 'frontend1' },
+                { 'name': 'Zai Zai', 'title': 'engineer', 'className': 'frontend1' }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+    $('#chart-container').orgchart({
+      'data' : toTree(data)[0],
+      'nodeContent': 'title',
+        depth:2
+    });
+
+</script>

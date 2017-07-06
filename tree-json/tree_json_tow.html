@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+    </body>
+</html>
+<script type="text/javascript">
+// 根据父级构建
+    var data = [
+    {id:1,title:'a',pid:0},
+    {id:2,title:'a1',pid:1},
+    {id:3,title:'a11',pid:2},
+    {id:4,title:'a12',pid:2},
+    {id:5,title:'a2',pid:1},
+    {id:6,title:'a21',pid:5}
+];
+function fn(data,pid){
+    var result = [] , temp;
+    for(var i in data){
+        if(data[i].pid==pid){
+            result.push(data[i]);
+            temp = fn(data,data[i].id);           
+            if(temp.length>0){
+                data[i].children=temp;
+            }           
+        }       
+    }
+    return result;
+}
+console.log(fn(data , 0));
+</script>
